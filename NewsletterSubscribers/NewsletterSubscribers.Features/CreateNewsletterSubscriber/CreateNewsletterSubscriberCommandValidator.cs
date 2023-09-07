@@ -1,0 +1,7 @@
+﻿using NewsletterSubscribers._Shared.CreateNewsletterSubscriber;
+
+namespace NewsletterSubscribers.Features.CreateNewsletterSubscriber;
+
+public class CreateNewsletterSubscriberCommandValidator : CreateNewsletterSubscriberRequestValidator
+{
+}

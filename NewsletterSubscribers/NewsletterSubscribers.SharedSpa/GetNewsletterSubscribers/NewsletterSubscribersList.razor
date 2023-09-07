@@ -1,0 +1,19 @@
+﻿@inject NewsletterSubscribersHttpClient HttpClient
+@inject NewsletterSubscribersState State
+
+@if (State.NewsletterSubscribers?.Count() > 0)
+{
+    <ul class="list-unstyled">
+        @foreach (var sub in State.NewsletterSubscribers)
+        {
+            <li>@sub.Email</li>
+        }
+    </ul>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await HttpClient.InitNewsletterSubscribers();
+    }
+}

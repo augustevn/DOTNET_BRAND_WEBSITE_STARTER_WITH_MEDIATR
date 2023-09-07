@@ -1,0 +1,28 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.Web
+@namespace Brand.PrerenderServer.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Brand.Spa
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <base href="~/"/>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
+    <link href="css/app.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <component type="typeof(HeadOutlet)" render-mode="WebAssemblyPrerendered"/>
+</head>
+<body>
+<component type="typeof(App)" render-mode="WebAssemblyPrerendered"/>
+
+<div id="blazor-error-ui">
+    An error has occurred.
+    <a class="dismiss">🗙</a>
+</div>
+
+<script src="_framework/blazor.webassembly.js"></script>
+</body>
+</html>

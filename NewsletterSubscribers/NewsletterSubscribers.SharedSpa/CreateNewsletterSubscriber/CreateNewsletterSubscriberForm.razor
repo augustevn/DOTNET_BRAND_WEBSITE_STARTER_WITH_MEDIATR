@@ -1,0 +1,52 @@
+﻿@inject NewsletterSubscribersHttpClient HttpClient
+
+<EditForm Model="@_subscriptionModel" OnValidSubmit="HandleSubscriptionForm">
+    <FluentValidationValidator />
+    
+    <div class="form-group">
+        <InputText type="email" class="form-control" placeholder="Email address" @bind-Value="_subscriptionModel.Email"/>
+    </div>
+    
+    <button type="submit" class="btn btn-block btn-primary" disabled="@IsSubmit">
+        @BtnLabel
+    </button>
+    
+    <ValidationSummary />
+</EditForm>
+
+@if (IsSubmit && !string.IsNullOrWhiteSpace(SuccessMessage))
+{
+    <p class="mt-2 text-@(IsSuccess == true ? "success" : "danger")">
+        @SuccessMessage
+    </p>
+}
+
+@code {
+    [Parameter]
+    public string? BtnLabel { get; set; } = "Join";
+
+    private bool IsSubmit { get; set; }
+    private bool? IsSuccess { get; set; }
+    private string? SuccessMessage { get; set; }
+
+    private CreateNewsletterSubscriberRequest _subscriptionModel = new();
+
+    private async Task HandleSubscriptionForm()
+    {
+        IsSubmit = true;
+        IsSuccess = await HttpClient.CreateNewsletterSubscriber(_subscriptionModel);
+        
+        SuccessMessage = IsSuccess == true ? "Welcome to the club!" : "Oops, could not subscribe at this time.";
+
+        Task.Delay(2000).ContinueWith(_ => ResetForm());
+    }
+
+    private void ResetForm()
+    {
+        _subscriptionModel = new CreateNewsletterSubscriberRequest();
+        
+        IsSubmit = false;
+        IsSuccess = null;
+        SuccessMessage = null;
+    }
+}
